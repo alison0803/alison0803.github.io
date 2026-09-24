@@ -1,11 +1,12 @@
+
 p {
     font-family: Arial, sans-serif;
-      color: blue;
+      color: rgba(255, 0, 0, 0.263);
       font-size: 20px;
 }
 
 h1 {
-      color: rgb(22, 72, 31);
+      color: rgb(131, 148, 134);
       font-size: 36px;
       line-height: 1.5;
 }
@@ -13,14 +14,14 @@ h1 {
 #banner {
       background-color: #f8dfdf;
       height: 300px;
-      width: 200px
+      width: 200px;
       text-align: center;
 }
 
 #nav {
-      background-color: #f8dfdf;
+      background-color: #12572d55;
       padding: 10px;
-      width: 150px
+      width: 150px;
       text-align: center;
 
 }
