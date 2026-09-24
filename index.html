@@ -2,10 +2,39 @@
 <html lang="zh-Hant">
 <head>
   <meta charset="utf-8">
-  <title> 張惟萱的github </title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>as02</title>
+  <style>
+    :root { color-scheme: dark; }
+    * { box-sizing: border-box; }
+    body {
+      min-height: 100vh; margin: 0; overflow: hidden; display: grid; place-items: center;
+      background: radial-gradient(circle at 50% 50%, #5b190d 0, #260d0a 11%, transparent 29%), radial-gradient(ellipse at 50% 115%, #17100e 0, #050506 63%);
+      color: #d9d0c3; font-family: "Noto Serif TC", "Songti TC", serif;
+    }
+    body::before, body::after { content: ""; position: fixed; inset: -20%; pointer-events: none; }
+    body::before { opacity: .55; background-image: radial-gradient(#f1c78e 0 1px, transparent 1.5px); background-size: 83px 97px; filter: blur(.25px); animation: ash 18s linear infinite; }
+    body::after { opacity: .4; background: repeating-linear-gradient(0deg, transparent 0 3px, rgba(255, 213, 170, .035) 4px 5px); mix-blend-mode: screen; }
+    main { text-align: center; isolation: isolate; animation: fall 1.35s cubic-bezier(.16, .88, .27, 1.12) both; }
+    .nova {
+      position: relative; z-index: 1; display: grid; place-items: center; width: clamp(12rem, 40vw, 25rem); aspect-ratio: 1; border-radius: 50%; color: #fff4df; text-decoration: none;
+      text-shadow: 0 0 8px #fff, 0 0 22px #ff7b26, 0 0 48px #e2330e; background: radial-gradient(circle, #fffef5 0 3%, #ffd58e 8%, #ef571b 16%, #8f190b 30%, transparent 62%);
+      box-shadow: 0 0 20px 8px #e24214, 0 0 85px 26px #a51b0c, inset 0 0 35px #fff6d7; transition: transform .35s ease, filter .35s ease; animation: pulse 3.8s ease-in-out infinite;
+    }
+    .nova::before, .nova::after { content: ""; position: absolute; inset: -7%; border: 1px solid rgba(255, 141, 60, .65); border-radius: 48% 52% 45% 55%; animation: orbit 8s linear infinite; }
+    .nova::after { inset: 10%; border-color: rgba(255, 238, 191, .72); animation-direction: reverse; animation-duration: 5s; }
+    .nova:hover, .nova:focus-visible { transform: scale(1.11); filter: brightness(1.35); outline: none; }
+    .nova span { font-family: ui-monospace, SFMono-Regular, monospace; font-size: clamp(2rem, 8vw, 5.2rem); font-weight: 700; letter-spacing: .12em; text-indent: .12em; }
+    @keyframes pulse { 50% { transform: scale(1.045); box-shadow: 0 0 30px 13px #f35b1f, 0 0 110px 45px #b2260b, inset 0 0 50px #fff6d7; } }
+    @keyframes fall { 0% { opacity: 0; transform: translateY(-105vh) scale(.35); } 72% { opacity: 1; transform: translateY(3vh) scale(1.04); } 100% { transform: translateY(0) scale(1); } }
+    @keyframes orbit { to { transform: rotate(360deg) scale(1.07); } }
+    @keyframes ash { to { transform: translate3d(4%, -7%, 0); } }
+    @media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation: none !important; } }
+  </style>
 </head>
 <body>
-  <h1>我的網站</h1>
-  <p><a href="as02/">前往 as02 網站</a></p>
+  <main>
+    <a class="nova" href="as02/" aria-label="前往 as02 網站"><span>as02</span></a>
+  </main>
 </body>
 </html>
