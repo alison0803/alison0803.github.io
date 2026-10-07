@@ -1,0 +1,175 @@
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  overscroll-behavior-y: auto;
+}
+
+body {
+  margin: 0;
+  background: #fff;
+  color: #000;
+  font-family: "Times New Roman", Times, serif;
+}
+
+.container {
+  width: 800px;
+  max-width: 100%;
+  margin: 0 auto;
+}
+
+#banner {
+  position: fixed;
+  top: 0;
+  left: 50%;
+  z-index: 10;
+  width: 800px;
+  max-width: 100%;
+  height: 100px;
+  padding: 3px;
+  background: #eee8ca;
+  opacity: 0.75;
+  transform: translateX(-50%);
+}
+
+#banner h1 {
+  margin: 0;
+  line-height: 94px;
+  color: #4d3b3b;
+  font-size: 32px;
+  font-weight: bold;
+  text-align: left;
+}
+
+.banner-placeholder {
+  height: 100px;
+}
+
+.columns::after {
+  display: block;
+  clear: both;
+  content: "";
+}
+
+.navigator-placeholder,
+#content,
+#supporting {
+  float: left;
+}
+
+.navigator-placeholder {
+  width: 100px;
+  min-height: 120px;
+}
+
+#navigator {
+  position: fixed;
+  top: 120px;
+  width: 100px;
+  background: #fff;
+  font-size: 12px;
+}
+
+#navigator ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+#navigator li + li {
+  margin-top: 5px;
+}
+
+#navigator a {
+  display: block;
+  padding: 7px 5px;
+  background: #e8e8e8;
+  color: #00e;
+  text-decoration: none;
+}
+
+#navigator a:hover,
+#navigator a:focus-visible {
+  background: #f7d9df;
+}
+
+#content {
+  width: 600px;
+  padding-top: 1em;
+  background: #fff;
+}
+
+.scene {
+  min-height: 700px;
+  scroll-margin-top: 110px;
+}
+
+.scene h2 {
+  margin: 0;
+  color: #000;
+  font-size: 24px;
+  font-weight: bold;
+}
+
+#supporting {
+  width: 100px;
+  height: 150px;
+  padding: 5px;
+  background: #f7d9df;
+  color: #000;
+  font-size: 14px;
+}
+
+#footer {
+  height: 50px;
+  padding: 5px;
+  background: #aaa;
+  color: #000;
+  font-size: 14px;
+  animation: bottom-bounce linear both;
+  animation-timeline: view();
+  animation-range: entry 0% entry 100%;
+}
+
+@keyframes bottom-bounce {
+  0% {
+    transform: translateY(18px);
+  }
+  70% {
+    transform: translateY(-10px);
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
+
+@media (max-width: 799px) {
+  .navigator-placeholder {
+    width: 100px;
+  }
+
+  #navigator {
+    width: 100px;
+  }
+
+  #content {
+    width: calc(100% - 200px);
+  }
+
+  #supporting {
+    width: 100px;
+    overflow-wrap: anywhere;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  #footer {
+    animation: none;
+  }
+}
