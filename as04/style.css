@@ -1,0 +1,226 @@
+:root {
+  color-scheme: dark;
+  background: #05070a;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  min-width: 320px;
+  background: #05070a;
+}
+
+html {
+  scroll-snap-type: y proximity;
+}
+
+body {
+  overflow-x: hidden;
+}
+
+main,
+.frame,
+.scroll-scene {
+  margin: 0;
+}
+
+.frame {
+  width: 100%;
+  height: 100vh;
+  height: 100dvh;
+  overflow: hidden;
+  scroll-snap-align: start;
+  scroll-snap-stop: always;
+}
+
+.frame img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.scroll-scene {
+  position: relative;
+  scroll-snap-align: start;
+}
+
+.crossfade-scene {
+  height: 200vh;
+  height: 200dvh;
+}
+
+.intro-scene {
+  height: calc(100vh + 6000px);
+  height: calc(100dvh + 6000px);
+}
+
+.slow-crossfade {
+  height: 400vh;
+  height: 400dvh;
+}
+
+.sequence-scene {
+  height: 700vh;
+  height: 700dvh;
+}
+
+.sticky-stage {
+  position: sticky;
+  top: 0;
+  width: 100%;
+  height: 100vh;
+  height: 100dvh;
+  overflow: hidden;
+}
+
+.layer {
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.crossfade-layer {
+  opacity: 0;
+  will-change: opacity;
+}
+
+.intro-first-layer {
+  object-position: center top;
+  will-change: object-position, opacity;
+}
+
+.page-two {
+  position: relative;
+  z-index: 2;
+  margin: 0;
+  margin-top: -100vh;
+  margin-top: -100dvh;
+  overflow: hidden;
+  background: #05070a;
+  -webkit-mask-image: linear-gradient(
+    to bottom,
+    transparent 0,
+    #000 34dvh,
+    #000 100%
+  );
+  mask-image: linear-gradient(
+    to bottom,
+    transparent 0,
+    #000 34dvh,
+    #000 100%
+  );
+  opacity: 0;
+  will-change: opacity;
+}
+
+.page-two-image {
+  display: block;
+  width: 100%;
+  height: auto;
+  margin-bottom: -100px;
+}
+
+.page-two-mask {
+  position: absolute;
+  z-index: 1;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  height: 58vh;
+  height: 58dvh;
+  background: linear-gradient(
+    to bottom,
+    rgba(5, 7, 10, 0),
+    rgba(5, 7, 10, 0.9) 62%,
+    #05070a 100%
+  );
+  opacity: 0;
+  pointer-events: none;
+  will-change: opacity;
+}
+
+.black-bridge {
+  height: 10vh;
+  height: 10dvh;
+  background: #05070a;
+}
+
+.fade-in-frame {
+  position: relative;
+  background: #05070a;
+}
+
+.fade-in-frame::after {
+  position: absolute;
+  z-index: 1;
+  top: 0;
+  right: 0;
+  left: 0;
+  height: 18vh;
+  height: 18dvh;
+  background: linear-gradient(
+    to bottom,
+    #05070a 0,
+    rgba(5, 7, 10, 0.75) 25%,
+    rgba(5, 7, 10, 0) 100%
+  );
+  content: "";
+  pointer-events: none;
+}
+
+.fade-in-frame img {
+  object-position: center top;
+  opacity: 0;
+  will-change: opacity;
+}
+
+.lower-mask {
+  position: absolute;
+  z-index: 1;
+  inset: 38% 0 0;
+  background: linear-gradient(
+    to bottom,
+    rgba(5, 7, 10, 0),
+    rgba(5, 7, 10, 0.92) 48%,
+    #05070a 100%
+  );
+  opacity: 0;
+  pointer-events: none;
+  will-change: opacity;
+}
+
+.sequence-layer {
+  z-index: 2;
+  opacity: 0;
+  will-change: opacity;
+}
+
+.sequence-layer-11 {
+  z-index: 3;
+}
+
+.horizontal-scene {
+  height: 300vh;
+}
+
+.horizontal-stage img {
+  display: block;
+  width: auto;
+  max-width: none;
+  height: 100%;
+  will-change: transform;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-snap-type: none;
+  }
+}
