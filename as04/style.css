@@ -97,6 +97,34 @@ main,
   will-change: object-position, opacity;
 }
 
+.intro-mask {
+  position: absolute;
+  z-index: 1;
+  inset: 0;
+  background: #05070a;
+  pointer-events: none;
+  will-change: opacity;
+}
+
+.intro-title {
+  position: absolute;
+  z-index: 2;
+  top: 50%;
+  left: 50%;
+  margin: 0;
+  opacity: 0;
+  pointer-events: none;
+  transform: translate(-50%, -50%);
+  will-change: opacity;
+}
+
+.intro-title img {
+  display: block;
+  width: min(82vw, 1100px);
+  height: auto;
+  filter: drop-shadow(0 0 1.5em rgba(0, 0, 0, 0.55));
+}
+
 .page-two {
   position: relative;
   z-index: 2;

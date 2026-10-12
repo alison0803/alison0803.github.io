@@ -1,6 +1,8 @@
 const crossfadeScenes = document.querySelectorAll("[data-crossfade]");
 const introScene = document.querySelector(".intro-scene");
 const introFirstLayer = introScene.querySelector(".intro-first-layer");
+const introMask = introScene.querySelector(".intro-mask");
+const introTitle = introScene.querySelector(".intro-title");
 const pageTwo = document.querySelector("[data-page-two]");
 const pageTwoImage = pageTwo.querySelector(".page-two-image");
 const pageTwoMask = pageTwo.querySelector(".page-two-mask");
@@ -53,6 +55,17 @@ const updateScenes = () => {
     (window.scrollY - introScene.offsetTop) / introScrollDistance,
   );
   introFirstLayer.style.objectPosition = `center ${introRainPan * 100}%`;
+
+  const introScrolled = clamp(
+    window.scrollY - introScene.offsetTop,
+    0,
+    introScrollDistance,
+  );
+  introMask.style.opacity = 1 - clamp(introScrolled / 1800);
+
+  const titleFadeIn = clamp((introScrolled - 600) / 1000);
+  const titleFadeOut = 1 - clamp((introScrolled - 2800) / 1200);
+  introTitle.style.opacity = titleFadeIn * titleFadeOut;
 
   const pageTwoEntry = clamp(
     (window.scrollY -
