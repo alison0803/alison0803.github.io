@@ -1,0 +1,42 @@
+/* 讓瀏覽器計算高度時不留下預設白邊。 */
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+}
+
+/* 每一個 section 剛好是一個視窗高，用來限制內部 sticky div 的範圍。 */
+section {
+  height: 100vh;
+}
+
+/* 第三區的外層也要同為 300vh，才不會被第四區提早覆蓋。 */
+.long-section {
+  height: 300vh;
+}
+
+/* 每個 .page 都剛好佔滿一個視窗高度。 */
+.page {
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: clamp(2rem, 7vw, 5rem);
+  font-weight: bold;
+}
+
+/* 第一、二個 div 使用 sticky top。 */
+.sticky-page {
+  position: sticky;
+  top: 0;
+}
+
+.page-1 { background: #e85d75; }
+.page-2 { background: #f4a261; }
+.page-3 { height: 300vh; background: #2a9d8f; }
+.page-4 { background: #457b9d; }
+.page-5 { background: #6a4c93; }

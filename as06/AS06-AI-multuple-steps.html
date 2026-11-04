@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Slide Effect</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- section 限制 sticky 的範圍；網頁中仍然只有五個 page div。 -->
+  <section><div class="page page-1 sticky-page">第一個 div</div></section>
+  <section><div class="page page-2 sticky-page">第二個 div</div></section>
+  <!-- 第三區為 300vh，可在這裡正常自由捲動三個畫面高度。 -->
+  <section class="long-section"><div class="page page-3">第三個 div（300vh 正常捲動）</div></section>
+  <!-- 第四區恢復 sticky；第三區到底後才會跳到這裡。 -->
+  <section><div class="page page-4 sticky-page">第四個 div</div></section>
+  <section><div class="page page-5">第五個 div</div></section>
+
+  <!-- 載入 jQuery，下面的 script.js 才能使用 $。 -->
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
