@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>五色・捲動練習</title>
+  <style>
+* { box-sizing: border-box; }
+html { overscroll-behavior: none; scrollbar-width: none; }
+html::-webkit-scrollbar { display: none; }
+body { margin: 0; color: #24332f; font-family: system-ui, -apple-system, "Noto Sans TC", sans-serif; }
+.page, .long-part { height: 100vh; height: 100dvh; position: relative; display: grid; place-items: center; overflow: hidden; }
+.sticky { position: sticky; top: 0; }
+.coral { background: #ef9687; z-index: 1; }
+.sand { background: #f0d58a; z-index: 2; }
+.mint { background: #a7cbb0; z-index: 3; }
+.blue { background: #91b9cf; z-index: 4; }
+.lilac { background: #b8a6ca; z-index: 5; }
+.long-page { position: relative; height: 300vh; height: 300dvh; }
+.content { position: relative; z-index: 1; text-align: center; padding: 32px; }
+.eyebrow, .hint { display: block; font-size: 12px; letter-spacing: .2em; }
+h1, h2 { margin: 25px 0; font-size: clamp(48px, 9vw, 112px); font-weight: 600; letter-spacing: -.05em; line-height: 1.2; }
+p { font-size: clamp(14px, 2vw, 18px); line-height: 1.8; }
+.hint { margin-top: 64px; }
+.number { position: absolute; right: 4vw; bottom: -0.18em; font-size: clamp(170px, 34vw, 460px); line-height: 1; font-weight: 700; opacity: .07; pointer-events: none; }
+.long-part + .long-part .content::before { content: ""; display: block; width: 1px; height: 80px; background: currentColor; opacity: .3; margin: 0 auto 40px; }
+  </style>
+</head>
+<body>
+  <main>
+    <section class="page sticky coral" aria-label="第 1 頁">
+      <div class="content"><span class="eyebrow">五色・捲動練習</span><h1>第一頁</h1><p>慢慢滑動，走進下一種顏色。</p><span class="hint">向下捲動 ↓</span></div><span class="number" aria-hidden="true">01</span>
+    </section>
+    <section class="page sticky sand" aria-label="第 2 頁">
+      <div class="content"><span class="eyebrow">02 / 05</span><h2>第二頁</h2><p>停留一刻，再往下探索。</p><span class="hint">向下捲動 ↓</span></div><span class="number" aria-hidden="true">02</span>
+    </section>
+    <section class="long-page mint" aria-label="第 3 頁，三倍長頁">
+      <div class="long-part"><div class="content"><span class="eyebrow">03 / 05 · 自由捲動</span><h2>第三頁</h2><p>這一頁很長，可以慢慢往下看。</p><span class="hint">繼續往下 ↓</span></div><span class="number" aria-hidden="true">03</span></div>
+      <div class="long-part"><div class="content"><span class="eyebrow">第三頁 · 中段</span><h2>走到一半</h2><p>跟著捲動的節奏，繼續前進。</p><span class="hint">還有一點風景 ↓</span></div></div>
+      <div class="long-part"><div class="content"><span class="eyebrow">第三頁 · 底部</span><h2>下一站，藍色</h2><p>抵達底部後，再向下滑動即可換頁。</p><span class="hint">前往第四頁 ↓</span></div></div>
+    </section>
+    <section class="page sticky blue" aria-label="第 4 頁">
+      <div class="content"><span class="eyebrow">04 / 05</span><h2>第四頁</h2><p>讓視線在藍色裡休息。</p><span class="hint">最後一頁 ↓</span></div><span class="number" aria-hidden="true">04</span>
+    </section>
+    <section class="page lilac" aria-label="第 5 頁">
+      <div class="content"><span class="eyebrow">05 / 05</span><h2>第五頁</h2><p>已經到底，也可以向上重新走一遍。</p><span class="hint">向上捲動 ↑</span></div><span class="number" aria-hidden="true">05</span>
+    </section>
+  </main>
+  <script>
+const threshold = 100;
+const quietTime = 220;
+let page = 0;
+let accumulated = 0;
+let lastInput = 0;
+let locked = false;
+let animation = 0;
+let unlockTimer = 0;
+let touchY = null;
+const reducedMotion = matchMedia('(prefers-reduced-motion: reduce)');
+
+// Positions come from normal document heights; sticky elements move visually.
+function positions() {
+  const height = document.querySelector('.page').getBoundingClientRect().height;
+  return [0, height, height * 2, height * 5, height * 6];
+}
+
+function releaseAfterQuiet() {
+  clearTimeout(unlockTimer);
+  unlockTimer = setTimeout(() => {
+    if (animation) return;
+    locked = false;
+    accumulated = 0;
+  }, quietTime);
+}
+
+function jump(next, fromBottom = false) {
+  page = next;
+  accumulated = 0;
+  locked = true;
+  const stops = positions();
+  const target = stops[page] + (fromBottom ? stops[1] * 2 : 0);
+  const start = scrollY;
+  const started = performance.now();
+  const duration = reducedMotion.matches ? 0 : 560;
+
+  function frame(now) {
+    const progress = duration ? Math.min((now - started) / duration, 1) : 1;
+    const eased = progress * progress * (3 - 2 * progress);
+    window.scrollTo(0, start + (target - start) * eased);
+    if (progress < 1) {
+      animation = requestAnimationFrame(frame);
+    } else {
+      animation = 0;
+      window.scrollTo(0, target);
+      releaseAfterQuiet();
+    }
+  }
+  animation = requestAnimationFrame(frame);
+}
+
+function move(delta) {
+  const now = performance.now();
+  if (locked) {
+    releaseAfterQuiet();
+    lastInput = now;
+    return;
+  }
+  const stops = positions();
+  if (page === 2) {
+    const top = stops[2];
+    const bottom = stops[3] - stops[1];
+    if ((delta > 0 && scrollY < bottom - 1) || (delta < 0 && scrollY > top + 1)) {
+      window.scrollTo(0, Math.max(top, Math.min(bottom, scrollY + delta)));
+      accumulated = 0;
+      lastInput = now;
+      return;
+    }
+  }
+  if (now - lastInput > 300 || Math.sign(delta) !== Math.sign(accumulated)) accumulated = 0;
+  lastInput = now;
+  accumulated += delta;
+  if (Math.abs(accumulated) < threshold) return;
+  const direction = Math.sign(accumulated);
+  const next = page + direction;
+  accumulated = 0;
+  if (next >= 0 && next <= 4) jump(next, page === 3 && direction < 0);
+}
+
+window.addEventListener('wheel', (event) => {
+  if (event.ctrlKey || Math.abs(event.deltaX) > Math.abs(event.deltaY)) return;
+  event.preventDefault();
+  const unit = event.deltaMode === 1 ? 16 : event.deltaMode === 2 ? innerHeight : 1;
+  move(event.deltaY * unit);
+}, { passive: false });
+
+window.addEventListener('touchstart', (event) => {
+  touchY = event.touches.length === 1 ? event.touches[0].clientY : null;
+}, { passive: true });
+window.addEventListener('touchmove', (event) => {
+  if (touchY === null || event.touches.length !== 1) return;
+  event.preventDefault();
+  const nextY = event.touches[0].clientY;
+  move(touchY - nextY);
+  touchY = nextY;
+}, { passive: false });
+window.addEventListener('touchend', () => { touchY = null; });
+
+window.addEventListener('keydown', (event) => {
+  if (event.altKey || event.ctrlKey || event.metaKey) return;
+  const direction = { ArrowDown: 1, PageDown: 1, ' ': event.shiftKey ? -1 : 1, ArrowUp: -1, PageUp: -1 }[event.key];
+  if (!direction) return;
+  event.preventDefault();
+  if (!event.repeat) move(direction * threshold);
+});
+
+window.addEventListener('resize', () => {
+  const oldHeight = lastHeight;
+  const ratio = scrollY / oldHeight;
+  cancelAnimationFrame(animation);
+  animation = 0;
+  const stops = positions();
+  lastHeight = stops[1];
+  window.scrollTo(0, page === 2 ? Math.max(stops[2], Math.min(stops[3] - stops[1], ratio * lastHeight)) : stops[page]);
+  releaseAfterQuiet();
+});
+let lastHeight = positions()[1];
+// Avoid browser scroll restoration leaving a short page between two stops.
+history.scrollRestoration = 'manual';
+window.scrollTo(0, 0);
+  </script>
+</body>
+</html>
